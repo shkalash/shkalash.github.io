@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shai Kalev — Software & Game Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0c;
+            --bg-secondary: #111114;
+            --bg-card: #16161a;
+            --bg-card-hover: #1c1c22;
+            --text-primary: #e8e6e3;
+            --text-secondary: #9a9a9a;
+            --text-muted: #5a5a5a;
+            --accent: #c8a84e;
+            --accent-dim: #8a7235;
+            --accent-glow: rgba(200, 168, 78, 0.08);
+            --border: #222228;
+            --border-light: #2a2a32;
+            --font-body: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-light) var(--bg-primary);
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---- NAV ---- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+        }
+
+        nav .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+
+        nav .logo {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            transition: color 0.25s;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 60% 50% at 50% 0%, rgba(200, 168, 78, 0.03) 0%, transparent 100%),
+                radial-gradient(circle at 20% 80%, rgba(200, 168, 78, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 .accent {
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-links a {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transition: all 0.25s;
+            letter-spacing: 0.03em;
+        }
+
+        .hero-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+            background: var(--accent-glow);
+        }
+
+        /* ---- SECTIONS ---- */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-dim);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .section-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--accent-dim);
+            margin-top: 1rem;
+        }
+
+        /* ---- ABOUT ---- */
+        #about {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            max-width: 780px;
+        }
+
+        .about-details {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .detail-block {
+            padding: 1.2rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .detail-block h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-block p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+        }
+
+        .tech-tags span {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            padding: 0.25rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+        }
+
+        /* ---- PROJECTS ---- */
+        .projects-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-light);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .project-card-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .project-video {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-primary);
+        }
+
+        .project-video-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .project-video-frame video,
+        .project-video-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border: none;
+        }
+
+        .project-video-frame .placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-card) 100%);
+        }
+
+        /* Video selector tabs */
+        .video-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .video-selector:empty {
+            display: none;
+        }
+
+        .vid-tab {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            border-right: 1px solid var(--border);
+            padding: 0.55rem 0.9rem;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+            white-space: nowrap;
+        }
+
+        .vid-tab:last-child {
+            border-right: none;
+        }
+
+        .vid-tab:hover {
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+        }
+
+        .vid-tab.active {
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .project-info {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .project-type {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent-dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .project-role {
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .project-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-tech span {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            padding: 0.2rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.25s;
+            letter-spacing: 0.03em;
+        }
+
+        .project-links a:hover {
+            color: var(--accent);
+        }
+
+        .project-links a::before {
+            content: '→ ';
+            color: var(--accent-dim);
+        }
+
+        /* ---- EXPERIENCE ---- */
+        #experience {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .timeline {
+            display: grid;
+            gap: 0;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding-top: 0.3rem;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-company {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-weight: 400;
+        }
+
+        .timeline-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .timeline-tech {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            letter-spacing: 0.03em;
+        }
+
+        /* ---- CONTACT ---- */
+        .contact-content {
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.7rem 1.4rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transition: all 0.25s;
+        }
+
+        .contact-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+            background: var(--accent-glow);
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* ---- ANIMATIONS ---- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 900px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-card-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .timeline-date {
+                padding-top: 0;
+            }
+        }
+
+        /* ---- CONTACT FORM ---- */
+        .contact-content {
+            max-width: 560px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-content > p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-links a {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transition: all 0.25s;
+        }
+
+        .contact-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+            background: var(--accent-glow);
+        }
+
+        .contact-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .contact-divider::before,
+        .contact-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-field label {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .form-field input,
+        .form-field textarea {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 300;
+            padding: 0.7rem 0.9rem;
+            transition: border-color 0.2s, background 0.2s;
+            resize: none;
+            outline: none;
+            width: 100%;
+        }
+
+        .form-field input::placeholder,
+        .form-field textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            border-color: var(--accent-dim);
+            background: var(--bg-card-hover);
+        }
+
+        .form-field textarea {
+            min-height: 130px;
+        }
+
+        .form-submit {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-note {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .btn-send {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--bg-primary);
+            background: var(--accent);
+            border: none;
+            border-radius: 4px;
+            padding: 0.65rem 1.4rem;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn-send:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        .btn-send:active {
+            transform: translateY(0);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-status {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            padding: 0.7rem 1rem;
+            border-radius: 4px;
+            display: none;
+            margin-top: 0.5rem;
+        }
+
+        .form-status.success {
+            display: block;
+            background: rgba(100, 200, 120, 0.08);
+            border: 1px solid rgba(100, 200, 120, 0.25);
+            color: #6dc882;
+        }
+
+        .form-status.error {
+            display: block;
+            background: rgba(220, 100, 80, 0.08);
+            border: 1px solid rgba(220, 100, 80, 0.25);
+            color: #dc6450;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-submit {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-send {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 12, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            nav .nav-links.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .project-info {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div class="logo">shai.kalev</div>
+        <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-label">Software Engineer · Game Developer · EU National</div>
+        <h1>Shai <span class="accent">Kalev</span></h1>
+        <p class="hero-sub">
+            Principal Software Engineer with 20+ years building real-time systems, 
+            shipped games, cross-platform SDKs, and AI-integrated applications 
+            across mobile, desktop, console, and XR — with deep experience leading the cross-functional teams it takes to bring them to life.
+        </p>
+        <div class="hero-links">
+            <a href="https://github.com/ShKalash" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/shaikalev/" target="_blank">LinkedIn</a>
+            <a href="https://store.steampowered.com/app/408720/Divide/" target="_blank">Steam — Divide</a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-inner">
+        <div class="section-header fade-in">
+            <div class="section-label">01 — About</div>
+            <h2 class="section-title">Building software that ships</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+            <div class="about-text fade-in">
+                <p>
+                    I've spent my career turning complex ideas into production-grade systems — whether that's 
+                    a commercial PS4/PC title built as the sole engineer, a real-time neural data platform 
+                    processing EEG signals on mobile devices, or GPU-accelerated generative AI pipelines.
+                </p>
+                <p>
+                    The stack has never been a constraint. For over two decades I've built across game engines, native mobile, real-time data pipelines,
+                    databases, hardware integrations, cloud infrastructure, and AI systems — shipping production code in Unity/C#, Swift, Kotlin, C++, Python, GraphQL, Docker, and more
+                    I care about clean architecture, performance, maintainability, and solving the problems at hand with the right system.
+                </p>
+                <p>
+                    I've been fully remote for well over a decade,
+                    collaborating with founders, engineers, artists, and stakeholders spread across the US, Europe, and beyond.
+                    Distributed teams, async workflows, and timezone-spanning communication aren't adjustments I've had to make.
+                    My location agnostic nature also opens the door to relocating when a more on site or hybrid model is required.
+                </p>
+
+        
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="section-inner">
+        <div class="section-header fade-in">
+            <div class="section-label">02 — Projects</div>
+            <h2 class="section-title">Selected work</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="projects-grid">
+
+            <!-- DIVIDE -->
+            <div class="project-card fade-in">
+                <div class="project-card-inner">
+                    <div class="project-video" data-pid="divide">
+                        <div class="project-video-frame"><div class="placeholder">VIDEO — COMING SOON</div></div>
+                        <div class="video-selector"></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-type">Commercial Game · PC / PlayStation 4</div>
+                        <h3 class="project-name">Divide</h3>
+                        <div class="project-role">Director of Engineering — Sole Engineer</div>
+                        <p class="project-desc">
+                            Built over 90% of the codebase for this commercial sci-fi action-adventure title. 
+                            Custom scripting system, ProtoBuf serialization, Behavior Tree AI, 
+                            adaptive music system, and full cross-platform save/load.
+                        </p>
+                        <div class="project-tech">
+                            <span>Unity3D</span>
+                            <span>C#</span>
+                            <span>PlayStation SDK</span>
+                            <span>Steam</span>
+                            <span>ProtoBuf</span>
+                            <span>Behavior Trees</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://store.steampowered.com/app/408720/Divide/" target="_blank">Steam</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARCTOP -->
+            <div class="project-card fade-in">
+                <div class="project-card-inner">
+                    <div class="project-video" data-pid="arctop">
+                        <div class="project-video-frame"><div class="placeholder">VIDEO — COMING SOON</div></div>
+                        <div class="video-selector"></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-type">Enterprise Platform · Mobile / Unity SDK</div>
+                        <h3 class="project-name">Arctop — Neural Data Platform</h3>
+                        <div class="project-role">Principal Engineer — 7 Years</div>
+                        <p class="project-desc">
+                            Architected the Arctop Central ecosystem: on-device TensorFlow Lite AI pipelines 
+                            for real-time EEG processing, native iOS/Android apps (Swift & Kotlin), 
+                            cross-platform Unity SDK, BLE device communication, and GraphQL integration.
+                        </p>
+                        <div class="project-tech">
+                            <span>Unity3D</span>
+                            <span>C#</span>
+                            <span>Swift</span>
+                            <span>Kotlin</span>
+                            <span>TensorFlow Lite</span>
+                            <span>BLE</span>
+                            <span>GraphQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/Arctop" target="_blank">GitHub</a>
+                            <!-- Add App Store / Play Store links -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DREAMFORGE -->
+            <div class="project-card fade-in">
+                <div class="project-card-inner">
+                    <div class="project-video" data-pid="dreamforge">
+                        <div class="project-video-frame"><div class="placeholder">VIDEO — COMING SOON</div></div>
+                        <div class="video-selector"></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-type">Generative AI · Cloud Platform</div>
+                        <h3 class="project-name">DreamForge Games</h3>
+                        <div class="project-role">Lead Software Engineer</div>
+                        <p class="project-desc">
+                            Directed architecture of a unified cloud platform powering multiple generative-AI 
+                            services for real-time voice, music, and 3D content. Docker-based GPU inference 
+                            on RunPod, Unity-native SDK bridges for iOS/Android authentication.
+                        </p>
+                        <div class="project-tech">
+                            <span>Unity3D</span>
+                            <span>C#</span>
+                            <span>Docker</span>
+                            <span>RunPod</span>
+                            <span>GPU Inference</span>
+                            <span>iOS/Android Bridges</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TICKERSQUEAK -->
+            <div class="project-card fade-in">
+                <div class="project-card-inner">
+                    <div class="project-video" data-pid="tickersqueak">
+                        <div class="project-video-frame"><div class="placeholder">VIDEO — COMING SOON</div></div>
+                        <div class="video-selector"></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-type">Native macOS App · Personal Project</div>
+                        <h3 class="project-name">TickerSqueak</h3>
+                        <div class="project-role">Solo Developer</div>
+                        <p class="project-desc">
+                            Real-time trading assistant built natively in SwiftUI. Transforms noisy chat data 
+                            into actionable trading signals with immediate alerts. Swift Concurrency for 
+                            responsive UI, SwiftData + CloudKit for synced persistence.
+                        </p>
+                        <div class="project-tech">
+                            <span>Swift</span>
+                            <span>SwiftUI</span>
+                            <span>SwiftData</span>
+                            <span>CloudKit</span>
+                            <span>Concurrency</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ShKalash/TickerSqueak" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCENE EDITOR (placeholder for future) -->
+            <!--
+            <div class="project-card fade-in">
+                <div class="project-card-inner">
+                    <div class="project-video">
+                        <div class="placeholder">VIDEO — COMING SOON</div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-type">C++ · Tools Programming Portfolio</div>
+                        <h3 class="project-name">Scene Editor</h3>
+                        <div class="project-role">Solo Developer</div>
+                        <p class="project-desc">
+                            Modern C++ scene editor demonstrating ECS architecture, asset loading, 
+                            basic rendering with shaders, command/undo-redo system, and ImGui UI panels.
+                            Built to showcase tools programming fundamentals.
+                        </p>
+                        <div class="project-tech">
+                            <span>C++17</span>
+                            <span>CMake</span>
+                            <span>OpenGL</span>
+                            <span>Dear ImGui</span>
+                            <span>GLM</span>
+                            <span>Assimp</span>
+                            <span>Catch2</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ShKalash/SceneEditor" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <!-- KFPW -->
+            <div class="project-card fade-in">
+                <div class="project-card-inner">
+                    <div class="project-video" data-pid="kfpw">
+                        <div class="project-video-frame"><div class="placeholder">VIDEO — COMING SOON</div></div>
+                        <div class="video-selector"></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-type">MMO · Earlier Career</div>
+                        <h3 class="project-name">Kung Fu Panda World</h3>
+                        <div class="project-role">Software Engineer — UI Architecture Lead</div>
+                        <p class="project-desc">
+                            Led UI architecture for DreamWorks' MMO built in AS3/Java. 
+                            Contributed to proprietary engine development in C++.
+                        </p>
+                        <div class="project-tech">
+                            <span>ActionScript 3</span>
+                            <span>Java</span>
+                            <span>C++</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="section-inner">
+        <div class="section-header fade-in">
+            <div class="section-label">03 — Experience</div>
+            <h2 class="section-title">Career timeline</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="timeline">
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">2025</div>
+                <div class="timeline-content">
+                    <h3>Lead Software Engineer</h3>
+                    <div class="timeline-company">DreamForge Games</div>
+                    <p class="timeline-desc">
+                        Architected a unified cloud platform powering multiple generative AI services for real-time voice, music, and 3D content. Built Docker-based GPU inference pipelines on RunPod and Unity-native SDK bridges for iOS and Android. Led a small engineering team through production, hiring, and technical decisions.
+                    </p>
+                    <div class="timeline-tech">Unity3D · C# · Docker · RunPod · iOS · Android</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">2018 — 2025</div>
+                <div class="timeline-content">
+                    <h3>Principal Engineer</h3>
+                    <div class="timeline-company">Arctop</div>
+                    <p class="timeline-desc">
+                        Key technical leader reporting to the C-Suite across a 7-year tenure. Owned the full technical architecture of a real-time EEG processing platform — on-device ML inference via TensorFlow Lite, native iOS and Android apps in Swift, Kotlin, and Java, BLE device integration, and GraphQL data stack. Built and maintained the cross-platform ArctopSDK for Unity3D, iOS, and Android, embedding Unity as a library within native mobile apps. Led development of multiple products built on top of the SDK including HoloLens and XR experiences. Mentored engineers, led cross-functional teams, and delivered a strategic integration with the U.S. Air Force Academy.
+                    </p>
+                    <div class="timeline-tech">Unity3D · C# · Swift · Kotlin · Java · TensorFlow Lite · BLE · GraphQL · ZeroMQ · iOS · Android · macOS · HoloLens · visionOS · XR</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">2012 — 2017</div>
+                <div class="timeline-content">
+                    <h3>Director of Engineering</h3>
+                    <div class="timeline-company">Exploding Tuba Studios</div>
+                    <p class="timeline-desc">
+                        Sole engineer on the commercial title Divide, shipped on PC and PlayStation 4. Built 90%+ of the codebase — in-engine scripting system, ProtoBuf-based serialization, Behavior Tree AI, adaptive music system, custom editor tooling, and PS4 certification.
+                    </p>
+                    <div class="timeline-tech">Unity3D · C# · ProtoBuf · PlayStation 4 SDK · Steam</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">2017 — 2018</div>
+                <div class="timeline-content">
+                    <h3>Senior Game Developer</h3>
+                    <div class="timeline-company">Ilyon Dynamics</div>
+                    <p class="timeline-desc">
+                        Ported Bubble Shooter Arcade from legacy C++ to TypeScript. Architected the core social client system, integrated Facebook SDK, and built backend connectivity and cross-device data sync.
+                    </p>
+                    <div class="timeline-tech">TypeScript · C++ · Facebook SDK</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">2012</div>
+                <div class="timeline-content">
+                    <h3>Software Engineer</h3>
+                    <div class="timeline-company">Pipeworks Software</div>
+                    <p class="timeline-desc">
+                        Gameplay mechanics and UI for a Square Enix social title in Unity3D. Built a runtime-customizable avatar system with dynamic mesh and material swapping.
+                    </p>
+                    <div class="timeline-tech">Unity3D · C#</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">2008 — 2011</div>
+                <div class="timeline-content">
+                    <h3>Software Engineer</h3>
+                    <div class="timeline-company">Trilogy Studios</div>
+                    <p class="timeline-desc">
+                        Led UI architecture for the Kung Fu Panda World MMO. Built core systems including matchmaking, inventory, and client-server networking. Later contributed to the proprietary Trilogy Touch iOS engine as an offsite contractor.
+                    </p>
+                    <div class="timeline-tech">ActionScript 3 · Java · C++ · SmartFoxServer · iOS</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">2008</div>
+                <div class="timeline-content">
+                    <h3>Software Engineer</h3>
+                    <div class="timeline-company">Mass Media Games</div>
+                    <p class="timeline-desc">
+                        Built a C++ multiplayer networking module for an FPS engine from scratch, implementing TCP/IP and UDP over WinSock under a tight deadline.
+                    </p>
+                    <div class="timeline-tech">C++ · WinSock · TCP/IP · UDP</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">2001 — 2002</div>
+                <div class="timeline-content">
+                    <h3>Software Engineer</h3>
+                    <div class="timeline-company">TTI-Telecom</div>
+                    <p class="timeline-desc">
+                        C++/Java client-server applications interfacing with complex telecom hardware.
+                    </p>
+                    <div class="timeline-tech">C++ · Java</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">1996 — 1998</div>
+                <div class="timeline-content">
+                    <h3>Junior Engineer</h3>
+                    <div class="timeline-company">Ventura Communications</div>
+                    <p class="timeline-desc">
+                        Intranote corporate messaging and remote administration. Templated data driven website for social security administration.
+                    </p>
+                    <div class="timeline-tech">C++ · Java · DB2</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-inner">
+        <div class="section-header fade-in" style="text-align:center">
+            <div class="section-label">04 — Contact</div>
+            <h2 class="section-title">Let's talk</h2>
+            <div class="section-divider" style="margin:1rem auto 0"></div>
+        </div>
+        <div class="contact-content fade-in">
+            <p>Open to new opportunities — feel free to reach out directly or connect on LinkedIn.</p>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/shaikalev/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/ShKalash" target="_blank">GitHub</a>
+            </div>
+
+            <div class="contact-divider">Or send a message</div>
+
+            <!--
+                FORMSPREE SETUP (free, takes ~2 min):
+                1. Go to https://formspree.io and create a free account
+                2. Create a new form — it will give you an endpoint like:
+                   https://formspree.io/f/YOUR_FORM_ID
+                3. Replace YOUR_FORM_ID below with your actual ID
+                Your email stays private — submissions go to your Formspree dashboard & inbox.
+            -->
+            <form class="contact-form" id="contactForm">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="cf-name">Name</label>
+                        <input type="text" id="cf-name" name="name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="cf-email">Email</label>
+                        <input type="email" id="cf-email" name="email" placeholder="your@email.com" required>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="cf-subject">Subject</label>
+                    <input type="text" id="cf-subject" name="subject" placeholder="What's this about?">
+                </div>
+                <div class="form-field">
+                    <label for="cf-message">Message</label>
+                    <textarea id="cf-message" name="message" placeholder="Tell me about the role, project, or idea..." required></textarea>
+                </div>
+                <div class="form-submit">
+                    <span class="form-note">Replies go to your email address above.</span>
+                    <button type="submit" class="btn-send">Send Message →</button>
+                </div>
+                <div class="form-status" id="formStatus"></div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Shai Kalev</p>
+</footer>
+
+<script>
+    // ============================================================
+    // VIDEO CONFIG — populate this to add videos to each project.
+    // Each key matches the data-pid on the project's .project-video div.
+    // Each entry is an array of { label, url } objects.
+    // url = YouTube embed URL (https://www.youtube.com/embed/VIDEO_ID)
+    //       or a direct video file path (e.g. "videos/divide-trailer.mp4")
+    // If only one video is defined, the selector tabs won't appear.
+    // ============================================================
+    const PROJECT_VIDEOS = {
+        divide: [
+            { label: 'Trailer',           url: '' },
+            { label: 'Gameplay Footage',  url: '' },
+            { label: 'Story Breakdown',   url: '' },
+        ],
+        arctop: [
+            { label: 'Overview',          url: '' },
+        ],
+        dreamforge: [
+            { label: 'Demo',              url: '' },
+        ],
+        tickersqueak: [
+            { label: 'Demo',              url: '' },
+        ],
+        kfpw: [
+            // No videos yet — placeholder stays visible
+        ],
+    };
+
+    // ---- Render video players ----
+    function initVideos() {
+        document.querySelectorAll('.project-video[data-pid]').forEach(container => {
+            const pid = container.dataset.pid;
+            const videos = PROJECT_VIDEOS[pid] || [];
+            const frame = container.querySelector('.project-video-frame');
+            const selector = container.querySelector('.video-selector');
+
+            // Filter out entries with no URL yet
+            const available = videos.filter(v => v.url);
+
+            if (!available.length) return; // keep placeholder
+
+            function loadVideo(v) {
+                const isYT = v.url.includes('youtube.com') || v.url.includes('youtu.be');
+                if (isYT) {
+                    frame.innerHTML = `<iframe src="${v.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                } else {
+                    frame.innerHTML = `<video src="${v.url}" controls></video>`;
+                }
+            }
+
+            // Load first video immediately
+            loadVideo(available[0]);
+
+            // Build tabs only if more than one video
+            if (available.length > 1) {
+                available.forEach((v, i) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'vid-tab' + (i === 0 ? ' active' : '');
+                    btn.textContent = v.label;
+                    btn.addEventListener('click', () => {
+                        selector.querySelectorAll('.vid-tab').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        loadVideo(v);
+                    });
+                    selector.appendChild(btn);
+                });
+            }
+        });
+    }
+
+    // ---- Fade-in observer ----
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav-links a').forEach(a => {
+        a.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.remove('open');
+        });
+    });
+
+    // ---- Contact form ----
+    // Replace YOUR_FORM_ID with your Formspree form ID (e.g. "xrgjabnk")
+    const FORMSPREE_ID = 'xwvnrpgy';
+
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('.btn-send');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            formStatus.className = 'form-status';
+            formStatus.style.display = 'none';
+
+            try {
+                const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(contactForm),
+                });
+                if (res.ok) {
+                    formStatus.textContent = '✓ Message sent — I\'ll get back to you soon.';
+                    formStatus.className = 'form-status success';
+                    contactForm.reset();
+                } else {
+                    throw new Error('server error');
+                }
+            } catch {
+                formStatus.textContent = '✕ Something went wrong. Try LinkedIn instead.';
+                formStatus.className = 'form-status error';
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Send Message →';
+        });
+    }
+
+    initVideos();
+</script>
+
+</body>
+</html>
