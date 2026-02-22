@@ -1048,15 +1048,15 @@
                         <div class="project-role">Solo Developer</div>
                         <p class="project-desc">
                             Real-time trading assistant built natively in SwiftUI. Transforms noisy chat data 
-                            into actionable trading signals with immediate alerts. Swift Concurrency for 
-                            responsive UI, SwiftData + CloudKit for synced persistence.
+                            into actionable trading signals with immediate alerts.
+                            Integrated connection to multiple charting software (TradingView, Option Stalker Pro, TC2000). 
+                            Built cross VM Mac -> Windows listener service.
                         </p>
                         <div class="project-tech">
                             <span>Swift</span>
                             <span>SwiftUI</span>
                             <span>SwiftData</span>
                             <span>CloudKit</span>
-                            <span>Concurrency</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/ShKalash/TickerSqueak" target="_blank">GitHub</a>
@@ -1329,7 +1329,12 @@
             { label: 'Demo',              url: 'dreamforge/trailer.mp4' , poster:'dreamforge/trailer-thumb.jpg' },
         ],
         tickersqueak: [
-            { label: 'Demo',              url: '' },
+            { label: 'Demo',              url: 'tsq/output.mp4' , poster:'tsq/main.png' },
+            { label: 'Main',        url: 'tsq/main.png' },
+            { label: 'Pre Market',    url: 'tsq/premarket.png' },
+            { label: 'Trade Idea I',    url: 'tsq/tradeidea1.png' },
+            { label: 'Trade Idea II',    url: 'tsq/tradeidea2.png' },
+            { label: 'Trade List',    url: 'tsq/tradelist.png' },
         ],
         kfpw: [
             { label: 'Trailer',              url: 'kfpw/trailer.webm', poster:'kfpw/trailer-thumb.jpg' },
@@ -1351,8 +1356,12 @@
 
             function loadVideo(v) {
                 const isYT = v.url.includes('youtube.com') || v.url.includes('youtu.be');
+                const isImage = v.url.match(/\.(jpg|jpeg|png|webp|gif)$/i);
+
                 if (isYT) {
                     frame.innerHTML = `<iframe src="${v.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                } else if (isImage) {
+                    frame.innerHTML = `<img src="${v.url}" alt="${v.label}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">`;
                 } else {
                     frame.innerHTML = `<video src="${v.url}" ${v.poster ? `poster="${v.poster}"` : ''} controls></video>`;
                 }
