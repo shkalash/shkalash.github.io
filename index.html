@@ -918,7 +918,7 @@
                     I've been fully remote for well over a decade,
                     collaborating with founders, engineers, artists, and stakeholders spread across the US, Europe, and beyond.
                     Distributed teams, async workflows, and timezone-spanning communication aren't adjustments I've had to make.
-                    My location agnostic nature also opens the door to relocating when a more on site or hybrid model is required.
+                    My location agnostic nature also opens the door to relocating when an on-site or hybrid model is required.
                 </p>
 
         
@@ -985,6 +985,8 @@
                         <div class="project-tech">
                             <span>Unity3D</span>
                             <span>C#</span>
+                            <span>Python</span>
+                            <span>JavaScript</span>
                             <span>Docker</span>
                             <span>RunPod</span>
                             <span>GPU Inference</span>
@@ -1014,20 +1016,19 @@
                         <div class="project-tech">
                             <span>Unity3D</span>
                             <span>C#</span>
-                            <span>Swift</span>
-                            <span>Kotlin</span>
+                            <span>iOS / Swift</span>
+                            <span>Android / Kotlin / Java</span>
                             <span>TensorFlow Lite</span>
                             <span>BLE</span>
                             <span>HoloLens</span>
                             <span>GraphQL</span>
                         </div>
                         <div class="project-links">
-                            
+                            <a href="https://arctop.com/" target="_blank">Arctop.com</a>
                             <a href="https://apps.apple.com/us/app/arctop/id6446177823" target="_blank">iOS</a>
                             <a href="https://apps.apple.com/us/app/arctop-sleep/id6737068806" target="_blank">Arctop Sleep</a>
                             <a href="https://play.google.com/store/apps/details?id=com.arctop.app" target="_blank">Android</a>
                             <a href="https://github.com/Arctop" target="_blank">GitHub</a>
-                            <!-- Add App Store / Play Store links -->
                         </div>
                     </div>
                 </div>
@@ -1350,7 +1351,12 @@
             { label: 'Gameplay Footage', url: 'divide/gameplay.mp4', poster: 'divide/gameplay-thumb.jpg' },
         ],
         arctop: [
-            { label: 'Overview',          url: '' },
+            { label: 'Top-Scope (iOS / Vision-OS)',          url: 'arctop/top-scope.mp4', poster:'arctop/ts-thumb.jpg' },
+            { label: 'KromaGlide (HoloLens)',          url: 'arctop/kroma.mp4' , poster:'arctop/kg-thumb.jpg' },
+            { label: 'Arctop Central',          url: 'arctop/central.png' , fit:'contain' },
+            { label: 'Arctop Sleep',          url: 'arctop/sleep.png' , fit:'contain' },
+            { label: 'Whishing Station (HoloLens)',          url: 'arctop/wishing.mp4' },
+            { label: 'Tartaria (HoloLens)',          url: 'arctop/tartaria.mp4' },
         ],
         dreamforge: [
             { label: 'Demo',              url: 'dreamforge/trailer.mp4' , poster:'dreamforge/trailer-thumb.jpg' },
@@ -1391,7 +1397,7 @@
                 if (isYT) {
                     frame.innerHTML = `<iframe src="${v.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
                 } else if (isImage) {
-                    frame.innerHTML = `<img src="${v.url}" alt="${v.label}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">`;
+                    frame.innerHTML = `<img src="${v.url}" alt="${v.label}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${v.fit||'cover'};display:block;">`;
                 } else {
                     frame.innerHTML = `<video src="${v.url}" ${v.poster ? `poster="${v.poster}"` : ''} style="position:absolute;inset:0;width:100%;height:100%;object-fit:${v.fit||'cover'};" controls></video>`;
                 }
