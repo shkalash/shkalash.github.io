@@ -1098,6 +1098,33 @@
             </div>
             -->
 
+            <!-- BUBBLE SHOOTER ARCADE -->
+            <div class="project-card fade-in">
+                <div class="project-card-inner">
+                    <div class="project-video" data-pid="bubbleshooter">
+                        <div class="project-video-frame"><div class="placeholder">VIDEO — COMING SOON</div></div>
+                        <div class="video-selector"></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-type">Mobile Game · iOS / Android</div>
+                        <h3 class="project-name">Bubble Shooter Arcade</h3>
+                        <div class="project-role">Senior Game Developer — Ilyon Dynamics</div>
+                        <p class="project-desc">
+                            Ported a high-traffic mobile title from a legacy C++ codebase to TypeScript. 
+                            Architected the core social client system, integrating Facebook SDK for 
+                            authentication, friend data, and cross-device progression sync.
+                        </p>
+                        <div class="project-tech">
+                            <span>TypeScript</span>
+                            <span>C++</span>
+                            <span>Facebook SDK</span>
+                            <span>iOS</span>
+                            <span>Android</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- KFPW -->
             <div class="project-card fade-in">
                 <div class="project-card-inner">
@@ -1339,6 +1366,9 @@
         kfpw: [
             { label: 'Trailer',              url: 'kfpw/trailer.webm', poster:'kfpw/trailer-thumb.jpg' },
         ],
+        bubbleshooter: [
+            { label: 'Gameplay', url: 'bubble/trailer.webm', poster: 'bubble/trailer-thumb.jpg', fit: 'contain' },
+        ],
     };
 
     // ---- Render video players ----
@@ -1363,7 +1393,7 @@
                 } else if (isImage) {
                     frame.innerHTML = `<img src="${v.url}" alt="${v.label}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">`;
                 } else {
-                    frame.innerHTML = `<video src="${v.url}" ${v.poster ? `poster="${v.poster}"` : ''} controls></video>`;
+                    frame.innerHTML = `<video src="${v.url}" ${v.poster ? `poster="${v.poster}"` : ''} style="position:absolute;inset:0;width:100%;height:100%;object-fit:${v.fit||'cover'};" controls></video>`;
                 }
             }
 
