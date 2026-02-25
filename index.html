@@ -112,10 +112,12 @@
         .hero {
             min-height: 100vh;
             display: flex;
+            flex-direction: column; /* Stack vertically */
             align-items: center;
-            justify-content: center;
-            padding: 6rem 2rem 4rem;
+            justify-content: center; /* Center the group */
+            padding: 6rem 2rem 2rem;
             position: relative;
+            gap: 4rem; /* Created explicit space between links and carousel */
         }
 
         .hero::before {
@@ -190,6 +192,82 @@
             color: var(--accent);
             border-color: var(--accent-dim);
             background: var(--accent-glow);
+        }
+
+        /* ---- HERO CAROUSEL ---- */
+        .hero-carousel-container {
+            position: relative; /* Changed from absolute to relative */
+            width: 100%;
+            overflow: hidden;
+            padding: 2rem 0;
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        .hero-carousel {
+            display: flex;
+            gap: 1.5rem;
+            padding: 0 2rem;
+            width: max-content;
+            animation: scroll 60s linear infinite;
+        }
+
+        .hero-carousel:hover {
+            animation-play-state: paused;
+        }
+
+        .carousel-item {
+            width: 220px;
+            aspect-ratio: 16/9;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg-card);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .carousel-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .carousel-item:hover img {
+            opacity: 1;
+        }
+
+        .carousel-item .item-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-carousel-container { bottom: 1rem; }
+            .carousel-item { width: 160px; }
         }
 
         /* ---- SECTIONS ---- */
@@ -881,9 +959,9 @@
         <div class="hero-label">Software Engineer · Game Developer · EU National</div>
         <h1>Shai <span class="accent">Kalev</span></h1>
         <p class="hero-sub">
-            Principal Software Engineer with 20+ years building real-time systems, 
+            Software Engineer with 20+ years building real-time systems, 
             shipped games, cross-platform SDKs, and AI-integrated applications 
-            across mobile, desktop, console, and XR — with deep experience leading the cross-functional teams it takes to bring them to life.
+            across mobile, desktop, console, and XR — with deep experience leading cross-functional teams to bring those visions to life.
         </p>
         <div class="hero-links">
             <a href="https://github.com/ShKalash" target="_blank">GitHub</a>
@@ -891,6 +969,11 @@
             <a href="https://store.steampowered.com/app/687270/Divide/" target="_blank">Steam — Divide</a>
         </div>
     </div>
+     
+     <div class="hero-carousel-container fade-in">
+            <div class="hero-carousel" id="heroCarousel">
+        </div>
+   </div>
 </section>
 
 <!-- ABOUT -->
@@ -1345,8 +1428,8 @@
     // ============================================================
     const PROJECT_VIDEOS = {
         divide: [
-            { label: 'Trailer',          url: 'divide/trailer.mp4',  poster: 'divide/trailer-thumb.jpg' },
             { label: 'Gameplay Footage', url: 'divide/gameplay.mp4', poster: 'divide/gameplay-thumb.jpg' },
+            { label: 'Trailer',          url: 'divide/trailer.mp4',  poster: 'divide/trailer-thumb.jpg' },
         ],
         arctop: [
             { label: 'Top-Scope (iOS / Vision-OS)',          url: 'arctop/topscope-demo.mp4', poster:'arctop/ts-thumb.jpg' },
@@ -1375,8 +1458,37 @@
         ],
     };
 
+    function initHeroCarousel() {
+        const carousel = document.getElementById('heroCarousel');
+        if (!carousel) return;
+
+        // Create a list of projects that have posters
+        const items = Object.entries(PROJECT_VIDEOS).map(([pid, vids]) => ({
+            pid,
+            poster: vids[0].poster,
+            label: pid
+        })).filter(item => item.poster);
+
+        // Duplicate items to ensure smooth infinite loop
+        const displayItems = [...items, ...items];
+
+        displayItems.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'carousel-item';
+            div.innerHTML = `
+                <img src="${item.poster}" alt="${item.label}">
+                <div class="item-label">${item.label}</div>
+            `;
+            div.onclick = () => {
+                document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+            };
+            carousel.appendChild(div);
+        });
+    }
+
     // ---- Render video players ----
     function initVideos() {
+        initHeroCarousel();
         document.querySelectorAll('.project-video[data-pid]').forEach(container => {
             const pid = container.dataset.pid;
             const videos = PROJECT_VIDEOS[pid] || [];
